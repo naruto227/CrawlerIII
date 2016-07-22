@@ -49,6 +49,17 @@ myEvents.on('upload', function (tablename) {
 function selectAndSend(tablename) {
     var selectSql = 'SELECT * FROM ' + tablename +
         ' ORDER BY id desc limit ' + parseInt(page) * 100 + ', 100;';
+    switch (tablename){
+        case 'sixrooms':
+        case 'bilibli':
+        case 'huajiao':
+            selectSql = 'SELECT * FROM ' + tablename +
+                ' WHERE fans != 0 ORDER BY id desc limit ' + parseInt(page) * 100 + ', 100;';
+            break;
+
+        default:
+            break;
+    }
     conn.query(selectSql, function (err, rows, fields) {
         if (err) {
             return console.log(err)
